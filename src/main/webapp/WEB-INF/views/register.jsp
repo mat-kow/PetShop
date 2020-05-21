@@ -23,23 +23,23 @@
     </div>
     <div>
         <form:form method="post" modelAttribute="user">
-            <div id="login-box">
+            <div id="register-box">
                 <div class="left">
                     <h1>Zarejestruj się</h1>
                     <form:errors path="userName" style="color:red"/>
                     <c:if test="${userNameFlag == true}">
-                        <span style="color:red">Wprowadzona nazwa użytkownika jest zajęta</span>
+                        <span class="error">Wprowadzona nazwa użytkownika jest zajęta</span>
                     </c:if>
                     <br/><form:input type="text" name="username" placeholder="Nazwa użytkownika" path="userName" />
                     <form:errors path="email" style="color:red"/>
                     <c:if test="${emailFlag == true}">
-                        <span style="color:red">Wprowadzony adres e-mail jest już używany.</span>
+                        <span class="error">Wprowadzony adres e-mail jest już używany.</span>
                     </c:if>
                     <br/><form:input type="email" name="email" placeholder="E-mail" path="email"/>
                     <form:errors path="password" style="color:red"/>
                     <br/><form:input type="password" name="password" placeholder="Hasło" path="password"/>
                     <c:if test="${password2Flag == true}">
-                        <span style="color:red">Hasła się nie zgadzają</span>
+                        <span class="error">Hasła się nie zgadzają</span>
                     </c:if>
                     <br/><input type="password" name="password2" placeholder="Powtórz hasło" />
 
