@@ -1,29 +1,59 @@
 package pl.teo.petshop.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Size(min = 3, max = 20, message = "Login musi mieć od 3do 20 znaków") @Column(length = 20, unique = true, nullable = false)
     private String userName;
+    @Size(min = 3, message = "Hasło za krótkie") @Column(nullable = false)
     private String password;
     private String roles;
     private boolean active;
+    @Email @Column(nullable = false, unique = true, length = 50)
+    private String email;
+    @OneToOne
+    private UserDetails userDetails;
 
     public User() {
+        this.roles = "ROLE_USER";
+        this.active = true;
     }
-
     public User(String userName, String password, String roles, boolean active) {
         this.userName = userName;
         this.password = password;
         this.roles = roles;
         this.active = active;
     }
+    public User(String userName, String password, String roles, boolean active, String email) {
+        this.userName = userName;
+        this.password = password;
+        this.roles = roles;
+        this.active = active;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
+    }
+
+
 
     public String getRoles() {
         return roles;
