@@ -4,8 +4,8 @@
     <li><a href="login">Zaloguj</a></li>
     <li><a href="register">Rejestracja</a></li>
     <li><a href="#">Wiadomości</a></li>
-    <li><a href="#">Moje konto</a></li>
-    <li><a href="#">Coś</a></li>
+    <li><a href="user">Moje konto</a></li>
+    <li><a href="admin">Admin</a></li>
     <li><a href="#">Inne coś</a></li>
     <li><a href="#">...</a></li>
 </ul><br>

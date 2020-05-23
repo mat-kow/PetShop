@@ -10,8 +10,4 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/user")
-    public String user(){
-        return "user";
-    }
 }

@@ -7,30 +7,35 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class UserDetails {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)//todo messages
     private long id;
     @Size(max = 20) @NotBlank @Column(length = 20)
     private String firstName;
     @Size(max = 20) @NotBlank @Column(length = 20)
     private String lastName;
-    @Size(max = 20) @NotBlank @Column(length = 20)
-    private String street;
+    @Size(max = 100) @NotBlank @Column(length = 100)
+    private String address;
     @Pattern(regexp = "[0-9]{2}-[0-9]{3}")
     private String postCode;
     @Size(max = 20) @NotBlank @Column(length = 20)
-    private String city;
-
+    private String post;
     public UserDetails() {
     }
 
-    public UserDetails(@Size(max = 20) @NotBlank String firstName, @Size(max = 20) @NotBlank String lastName,
-                       @Size(max = 20) @NotBlank String street, @Pattern(regexp = "[0-9]{2}-[0-9]{3}") String postCode,
-                       @Size(max = 20) @NotBlank String city) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.street = street;
-        this.postCode = postCode;
-        this.city = city;
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
     }
 
     public long getId() {
@@ -57,14 +62,6 @@ public class UserDetails {
         this.lastName = lastName;
     }
 
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
     public String getPostCode() {
         return postCode;
     }
@@ -73,11 +70,4 @@ public class UserDetails {
         this.postCode = postCode;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 }

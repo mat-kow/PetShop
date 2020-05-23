@@ -10,7 +10,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="register.css">
+    <link rel="stylesheet" type="text/css" href="form-style.css">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -27,7 +27,7 @@
                     <c:if test="${param.error==true}">
                         <span class="error">Błędny login lub hasło</span>
                     </c:if>
-                    <br/><input type="text" name="username" placeholder="Nazwa użytkownika"/>
+                    <br/><input type="text" name="username" placeholder="Nazwa użytkownika" autofocus/>
                     <br/><input type="password" name="password" placeholder="Hasło"/>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 

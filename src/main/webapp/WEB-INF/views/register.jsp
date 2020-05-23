@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="register.css">
+    <link rel="stylesheet" type="text/css" href="form-style.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <title>Zarejestruj się</title>
