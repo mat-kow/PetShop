@@ -22,7 +22,7 @@
     </div>
     <div>
         <h2>Dodaj nowy przedmiot</h2>
-        <form:form method="post" modelAttribute="product">
+        <form:form method="post" modelAttribute="product" enctype="multipart/form-data">
             <c:if test="${successFlag}">
                 <span class="success">Zapisano dane</span>
             </c:if>
@@ -37,7 +37,7 @@
             <br/>Dostawca: <form:input type="text" name="supplier" path="supplier" /><br/>
 
             <form:errors path="ean" class="error"/>
-            <br/>EAN: <form:input type="number" name="ean" path="ean" /><br/>
+            <br/>EAN: <form:input type="number" name="ean" path="ean" value="5904215127833"/><br/>
 
             <form:errors path="price" class="error"/>
             <br/>Cena: <form:input type="number" name="price" path="price" /><br/>
@@ -56,6 +56,8 @@
 
             <form:errors path="active" class="error"/>
             <br/>Aktywny do sprzedaży: <form:checkbox name="active" path="active" /><br/>
+
+            <input id="image" type="file" name="image"/>
 
             <br/><input type="submit" value="Zapisz">
 

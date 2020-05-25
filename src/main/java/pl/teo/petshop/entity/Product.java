@@ -31,6 +31,8 @@ public class Product {//todo messages
     private String categories;
     private String description;
     private boolean active;
+    @OneToOne
+    private FileMetadata imageMeta;
 
     public long getId() {
         return id;
@@ -62,6 +64,14 @@ public class Product {//todo messages
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public FileMetadata getImageMeta() {
+        return imageMeta;
+    }
+
+    public void setImageMeta(FileMetadata image) {
+        this.imageMeta = image;
     }
 
     public String getEan() {
