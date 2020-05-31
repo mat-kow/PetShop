@@ -14,22 +14,27 @@
         <%@ include file="../../fragments/header.jsp" %>
     </div>
     <div>
-        <table>
-            <tr>
-                <th>Produkt</th>
-                <th>Ilość</th>
-                <th>...</th>
-            </tr>
-
-            <c:forEach items="${cart}" var="orderProduct" varStatus="status">
+        <c:if test="${empty cart}">
+            <h2>Koszyk jest pusty!</h2>
+        </c:if>
+        <c:if test="${!empty cart}">
+            <table>
                 <tr>
-                    <td>${orderProduct.product.name}</td>
-                    <td>${orderProduct.quantity}</td>
-                    <td><a href="cart?deleteIndex=${status.index}">Usuń</a></td>
+                    <th>Produkt</th>
+                    <th>Ilość</th>
+                    <th>...</th>
                 </tr>
-            </c:forEach>
-        </table>
-        <button type="button"><a href="chooseDelivery">Dalej</a></button>
+
+                <c:forEach items="${cart}" var="orderProduct" varStatus="status">
+                    <tr>
+                        <td>${orderProduct.product.name}</td>
+                        <td>${orderProduct.quantity}</td>
+                        <td><a href="cart?deleteIndex=${status.index}">Usuń</a></td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <button type="button"><a href="chooseDelivery">Dalej</a></button>
+        </c:if>
     </div>
     <div id="footer">
         <%@ include file="../../fragments/footer.jsp" %>

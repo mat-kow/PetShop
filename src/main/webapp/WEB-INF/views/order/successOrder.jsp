@@ -19,7 +19,7 @@
         <%@ include file="../../fragments/header.jsp" %>
     </div>
     <div>
-        <h2>Zamóienie o numerze ${orderId} zostało przyjęte do realizacji</h2>
+        <h2>Zamówienie o numerze ${orderId} zostało przyjęte do realizacji</h2>
     </div>
     <div id="footer">
         <%@ include file="../../fragments/footer.jsp" %>

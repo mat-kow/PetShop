@@ -38,13 +38,18 @@ public class OrderController {
     public List<Delivery> deliveryOptions() {
         return deliveryRepository.findAll();
     }
-
-    @RequestMapping(value = "addToCart", method = RequestMethod.POST)
-    public String addToCart(@RequestParam int quantity, @RequestParam long productId, HttpSession session, Model model){
+    @ModelAttribute("cart")
+    public List<OrderProduct> getCart(HttpSession session) {
         List<OrderProduct> cart = (List<OrderProduct>) session.getAttribute("cart");
         if(cart == null){
             cart = new ArrayList<OrderProduct>();
         }
+        return cart;
+    }
+
+    @RequestMapping(value = "addToCart", method = RequestMethod.POST)
+    public String addToCart(@RequestParam int quantity, @RequestParam long productId, HttpSession session, Model model){
+        List<OrderProduct> cart = getCart(session);
         Product product= productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId));
         cart.add(new OrderProduct(product, quantity));
         model.addAttribute("cart", cart);
@@ -54,7 +59,7 @@ public class OrderController {
 
     @RequestMapping("cart")
     public String showCart(@RequestParam Optional<Integer> deleteIndex, HttpSession session, Model model){
-        List<OrderProduct> cart = (List<OrderProduct>) session.getAttribute("cart");
+        List<OrderProduct> cart = getCart(session);
         if (deleteIndex.isPresent() && cart != null){
             int index = deleteIndex.get();
             if(index < cart.size()) {
@@ -66,17 +71,25 @@ public class OrderController {
 
     @RequestMapping("chooseDelivery")
     public String chooseDelivery(Model model, Principal principal, HttpSession session){
-        List<OrderProduct> cart = (List<OrderProduct>) session.getAttribute("cart");
-        //todo if cart is null or empty
+        List<OrderProduct> cart = getCart(session);
+        if(cart.isEmpty()){
+            return "redirect:home";
+        }
         Optional<User> user = userRepository.findByUserNameIgnoreCase(principal.getName());
         UserDetails userDetails = user.orElseThrow(UserNotFoundException::new).getUserDetails();
-        model.addAttribute(userDetails);
+        if(!(userDetails == null)){
+            model.addAttribute(userDetails);
+        }
         Order order = new Order(user.get(), cart);
         model.addAttribute(order);
         return "order/chooseDelivery";
     }
     @RequestMapping(value = "summary", method = RequestMethod.POST)
-    public String summary(@RequestParam Delivery delivery, HttpSession session){
+    public String summary(@RequestParam(required = false) Delivery delivery, HttpSession session, Model model){
+        if(delivery == null){
+            model.addAttribute("deliveryError",true);
+            return "redirect:chooseDelivery";
+        }
         Order order = (Order) session.getAttribute("order");
         order.setDelivery(delivery);
         return "order/summary";
@@ -85,6 +98,9 @@ public class OrderController {
     @RequestMapping("confirmOrder")
     public String confirmOrder(HttpSession session, Model model){
         Order order = (Order) session.getAttribute("order");
+        if(order == null){
+            return "redirect:home";
+        }
         for (OrderProduct product : order.getProducts()){
             orderProductRepository.save(product);
         }

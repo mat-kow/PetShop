@@ -20,13 +20,17 @@
         <%@ include file="../../fragments/header.jsp" %>
     </div>
     <div>
-        <h2>Dane so wysyłki:</h2>
+        <h2>Dane do wysyłki:</h2>
+        <h4>Możesz je ustawić/zmienić w <a href="user">profilu użytkownika</a> </h4>
         ${userDetails.firstName} ${userDetails.lastName}<br>
         ${userDetails.address}<br>
         ${userDetails.postCode} ${userDetails.post}<br><br>
 
         <h2>Dostawa:</h2>
         <form method="post" action="summary">
+            <c:if test="${deliveryError}">
+                <span class="error">Wybierz dostawę</span><br/>
+            </c:if>
             <c:forEach var="delivery" items="${deliveryOptions}">
                 <input type="radio" name="delivery" value="${delivery.name}"> ${delivery.description} (${delivery.cost})<br>
             </c:forEach>

@@ -7,5 +7,5 @@
     <li><a href="user">Moje konto</a></li>
     <li><a href="admin">Admin</a></li>
     <li><a href="newproduct">Nowy produkt</a></li>
-    <li><a href="cart">Wózek</a></li>
+    <li><a href="cart">Koszyk</a></li>
 </ul><br>
