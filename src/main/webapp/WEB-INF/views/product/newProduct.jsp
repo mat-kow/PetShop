@@ -18,7 +18,7 @@
 <body>
 <div id="container">
     <div id="header">
-        <%@ include file="../fragments/header.jsp" %>
+        <%@ include file="../../fragments/header.jsp" %>
     </div>
     <div>
         <h2>Dodaj nowy przedmiot</h2>
@@ -28,7 +28,7 @@
             </c:if>
 
             <form:errors path="name" class="error"/>
-            <br/>Nazwa: <form:input type="text" name="firstName" path="name" /><br/>
+            <br/>Nazwa: <form:input type="text" name="name" path="name" /><br/>
 
             <form:errors path="manufacturer" class="error"/>
             <br/>Producent: <form:input type="text" name="manufacturer" path="manufacturer" /><br/>
@@ -37,16 +37,16 @@
             <br/>Dostawca: <form:input type="text" name="supplier" path="supplier" /><br/>
 
             <form:errors path="ean" class="error"/>
-            <br/>EAN: <form:input type="number" name="ean" path="ean" value="5904215127833"/><br/>
+            <br/>EAN: <form:input type="number" step="1" min="0" name="ean" path="ean" value="5904215127833"/><br/>
 
             <form:errors path="price" class="error"/>
-            <br/>Cena: <form:input type="number" name="price" path="price" /><br/>
+            <br/>Cena: <form:input type="number" step="0.01" min="0" name="price" path="price" /><br/>
 
             <form:errors path="weightGrams" class="error"/>
-            <br/>Gramatura: <form:input type="number" name="weightGrams" path="weightGrams" /> g<br/>
+            <br/>Gramatura: <form:input type="number" step="1" min="0" name="weightGrams" path="weightGrams" /> g<br/>
 
             <form:errors path="stock" class="error"/>
-            <br/>Zapas: <form:input type="number" name="stock" path="stock" /><br/>
+            <br/>Zapas: <form:input type="number" name="stock" step="1" min="0" path="stock" /><br/>
 
             <form:errors path="categories" class="error"/>
             <br/>Kategorie: <form:input type="text" name="categories" path="categories" /><br/>
@@ -64,7 +64,7 @@
         </form:form>
     </div>
     <div id="footer">
-        <%@ include file="../fragments/footer.jsp" %>
+        <%@ include file="../../fragments/footer.jsp" %>
     </div>
 </div>
 </body>
