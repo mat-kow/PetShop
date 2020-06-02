@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/admin", "/createDelivery","/deleteDelivery", "/editDelivery").hasRole("ADMIN")
-                .antMatchers("/newproduct").hasAnyRole("SALE", "ADMIN")
+                .antMatchers("/newproduct", "/orders", "/order").hasAnyRole("SALE", "ADMIN")
                 .antMatchers("/chooseDelivery","/confirmOrder","/summary","/user").hasAnyRole("ADMIN", "USER", "SALE")
                 .and()
             .formLogin().loginPage("/login").permitAll().failureForwardUrl("/login?error=true");
