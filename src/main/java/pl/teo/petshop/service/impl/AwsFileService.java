@@ -1,5 +1,6 @@
-package pl.teo.petshop.service;
+package pl.teo.petshop.service.impl;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
@@ -10,14 +11,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.teo.petshop.entity.FileMetadata;
 import pl.teo.petshop.repository.FileMetadataRepository;
+import pl.teo.petshop.service.FileService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.UUID;
 
-@Service
-public class AwsFileService {
+//@Service
+public class AwsFileService implements FileService {
     private final String bucketName = "pierwszy-kubel";
-    Regions clientRegion = Regions.EU_CENTRAL_1;
+    private final Regions clientRegion = Regions.EU_CENTRAL_1;
 
     private FileMetadataRepository fileMetadataRepository;
 
@@ -26,6 +29,7 @@ public class AwsFileService {
         this.fileMetadataRepository = fileMetadataRepository;
     }
 
+    @Override
     public FileMetadata uploadFile(MultipartFile file) {
         FileMetadata fileMetadata = null;
         if (!file.isEmpty()) {
@@ -34,10 +38,18 @@ public class AwsFileService {
                 String filename = "images/image_" + uuid.toString();
                 byte[] bytes = file.getBytes();
                 InputStream inputStream = new ByteArrayInputStream(bytes);
+                //localhost
                 AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                         .withCredentials(new ProfileCredentialsProvider())
                         .withRegion(clientRegion)
                         .build();
+
+                //elastic beanstalk
+//                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+//                        .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+//                        .withRegion(clientRegion)
+//                        .build();
+
                 s3Client.putObject(new PutObjectRequest(bucketName, filename, inputStream, new ObjectMetadata()));
                 System.out.println("File upload success");
                 fileMetadata = new FileMetadata(file,filename);
@@ -51,13 +63,31 @@ public class AwsFileService {
         return fileMetadata;
     }
 
+    @Override
+     public void getFile(String fileName, HttpServletResponse response){
+         try {
+             //localhost
+                AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                        .withCredentials(new ProfileCredentialsProvider())
+                        .withRegion(clientRegion)
+                        .build();
 
-     public S3Object getFile(String fileName){
-         AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                 .withCredentials(new ProfileCredentialsProvider())
-                 .withRegion(clientRegion)
-                 .build();
-         return s3Client.getObject(new GetObjectRequest(bucketName, fileName));
+             //elastic beanstalk
+//             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+//                     .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+//                     .withRegion(clientRegion)
+//                     .build();
 
+             S3Object object = s3Client.getObject(new GetObjectRequest(bucketName, fileName));
+             InputStream is = object.getObjectContent();
+             FileMetadata metadata = (fileMetadataRepository.findByName(fileName)).get();//todo orElseThrow
+             response.setContentType(metadata.getContentType());
+             response.setContentLength((int) metadata.getSize());
+             org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+             response.flushBuffer();
+         } catch (IOException ex) {
+             System.out.println("Download file error " + ex);
+             response.setStatus(404);
+         }
      }
 }

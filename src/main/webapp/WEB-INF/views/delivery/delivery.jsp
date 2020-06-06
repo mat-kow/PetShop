@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: teo
@@ -20,19 +21,18 @@
         <%@ include file="../../fragments/header.jsp" %>
     </div>
     <div>
-        <form:form method="post" modelAttribute="delivery">
+        <form:form method="post" modelAttribute="deliveryDto">
             <c:if test="${successFlag}">
                 <span class="success">Zapisano dane</span>
             </c:if>
-
             <form:errors path="name" class="error"/>
-            <br/>Nazwa: <form:input type="text" name="name" path="name" /><br/>
+            <br/>Nazwa: <form:input type="text" path="name" /><br/>
 
-            <form:errors path="description" class="error"/>
-            <br/>Producent: <form:input type="text" name="description" path="description" /><br/>
+            <form:errors path="label" class="error"/>
+            <br/>Opis: <form:input type="text" path="label" /><br/>
 
             <form:errors path="cost" class="error"/>
-            <br/>Cena: <form:input type="number" step="0.01" min="0" name="cost" path="cost" /><br/>
+            <br/>Koszt: <form:input type="number" step="0.01" min="0" path="cost" /><br/>
 
             <br/><input type="submit" value="Zapisz">
 

@@ -2,7 +2,6 @@ package pl.teo.petshop.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Entity
@@ -10,20 +9,19 @@ public class Delivery {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column (length = 20)
-    @Size(max = 20, min =3)
     private String name;
     @Column (length = 20)
-    @Size(max = 20, min =3)
-    private String description;
-    @Digits(integer = 4, fraction = 2)
+    private String label;
+//    @Column(precision = 6, scale = 4)
+    @Digits (integer = 4, fraction = 2)
     private BigDecimal cost;
 
-    public String getDescription() {
-        return description;
+    public String getLabel() {
+        return label;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLabel(String description) {
+        this.label = description;
     }
 
     public long getId() {

@@ -27,7 +27,7 @@
 
                 <c:forEach items="${cart}" var="orderProduct" varStatus="status">
                     <tr>
-                        <td>${orderProduct.product.name}</td>
+                        <td>${orderProduct.productDto.name}</td>
                         <td>${orderProduct.quantity}</td>
                         <td><a href="cart?deleteIndex=${status.index}">Usuń</a></td>
                     </tr>

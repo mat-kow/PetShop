@@ -21,15 +21,6 @@ public class Order {
     private OrderStatus status;
     @ManyToOne
     private Delivery delivery;
-    public Order(User user, List<OrderProduct> products) {
-        this.user = user;
-        this.products = products;
-        this.status = OrderStatus.CREATED;
-    }
-
-    public Order() {
-        this.status = OrderStatus.CREATED;
-    }
 
     @Transient
     public BigDecimal getSum(){

@@ -1,39 +1,32 @@
-package pl.teo.petshop.entity;
+package pl.teo.petshop.dto;
 
-import javax.persistence.*;
+import org.hibernate.validator.constraints.EAN;
+import pl.teo.petshop.entity.FileMetadata;
+
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
-@Entity
-public class Product {//todo messages
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(length = 50)
+public class ProductDto {
+    private Long id;
+    @Size(max = 50) @NotBlank
     private String name;
-    @Column(length = 50)
+    @Size(max = 50)
     private String manufacturer;
-    @Column(length = 50)
+    @Size(max = 50)
     private String supplier;
-    @Column (length = 13)
+    @EAN
     private String ean;
-    @Digits (integer = 4, fraction = 2)
+    @Digits(integer = 4, fraction = 2)
     private BigDecimal price;
     private int weightGrams;
     private int stock;
     private String categories;
-    @Column(length = 1000)
+    @Size(max = 1000)
     private String description;
     private boolean active;
-    @OneToOne
     private FileMetadata imageMeta;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -55,16 +48,16 @@ public class Product {//todo messages
         return supplier;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setSupplier(String supplier) {
         this.supplier = supplier;
-    }
-
-    public FileMetadata getImageMeta() {
-        return imageMeta;
-    }
-
-    public void setImageMeta(FileMetadata image) {
-        this.imageMeta = image;
     }
 
     public String getEan() {
@@ -121,5 +114,13 @@ public class Product {//todo messages
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public FileMetadata getImageMeta() {
+        return imageMeta;
+    }
+
+    public void setImageMeta(FileMetadata imageMeta) {
+        this.imageMeta = imageMeta;
     }
 }

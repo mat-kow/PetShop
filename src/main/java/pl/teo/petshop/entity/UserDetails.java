@@ -1,24 +1,22 @@
 package pl.teo.petshop.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 public class UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)//todo messages
-    private long id;
-    @Size(max = 20) @NotBlank @Column(length = 20)
+    private Long id;
+    @Column(length = 20)
     private String firstName;
-    @Size(max = 20) @NotBlank @Column(length = 20)
+    @Column(length = 20)
     private String lastName;
-    @Size(max = 100) @NotBlank @Column(length = 100)
+    @Column(length = 100)
     private String address;
-    @Pattern(regexp = "[0-9]{2}-[0-9]{3}")
+    @Column (length = 6)
     private String postCode;
-    @Size(max = 20) @NotBlank @Column(length = 20)
+    @Column(length = 20)
     private String post;
+
     public UserDetails() {
     }
 
@@ -38,11 +36,11 @@ public class UserDetails {
         this.post = post;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

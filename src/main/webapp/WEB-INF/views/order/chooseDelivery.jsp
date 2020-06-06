@@ -22,9 +22,9 @@
     <div>
         <h2>Dane do wysyłki:</h2>
         <h4>Możesz je ustawić/zmienić w <a href="user">profilu użytkownika</a> </h4>
-        ${userDetails.firstName} ${userDetails.lastName}<br>
-        ${userDetails.address}<br>
-        ${userDetails.postCode} ${userDetails.post}<br><br>
+        ${userDetailsDto.firstName} ${userDetailsDto.lastName}<br>
+        ${userDetailsDto.address}<br>
+        ${userDetailsDto.postCode} ${userDetailsDto.post}<br><br>
 
         <h2>Dostawa:</h2>
         <form method="post" action="summary">
@@ -32,7 +32,7 @@
                 <span class="error">Wybierz dostawę</span><br/>
             </c:if>
             <c:forEach var="delivery" items="${deliveryOptions}">
-                <input type="radio" name="delivery" value="${delivery.name}"> ${delivery.description} (${delivery.cost})<br>
+                <input type="radio" name="delivery" value="${delivery.name}"> ${delivery.label} (${delivery.cost})<br>
             </c:forEach>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="submit" value="Dalej">

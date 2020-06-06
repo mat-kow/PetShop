@@ -26,22 +26,22 @@
                 <th>Ilość</th>
                 <th>Suma</th>
             </tr>
-        <c:forEach var="orderProduct" items="${order.products}">
+        <c:forEach var="orderProduct" items="${orderDto.productsDto}">
             <tr>
-                <td>${orderProduct.product.name}</td>
+                <td>${orderProduct.productDto.name}</td>
                 <td>${orderProduct.quantity}</td>
                 <td>${orderProduct.sum}</td>
             </tr>
         </c:forEach>
             <tr>
                 <td>Sposób dostawy</td>
-                <td>${order.delivery.description}</td>
-                <td>${order.delivery.cost}</td>
+                <td>${orderDto.deliveryDto.label}</td>
+                <td>${orderDto.deliveryDto.cost}</td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td>${order.sum}</td>
+                <td>${orderDto.sum}</td>
             </tr>
         </table>
         <button type="button"><a href="confirmOrder">Zamawiam!</a> </button>

@@ -25,7 +25,7 @@
     <div>
         <h3>Zalogowano jako <security:authentication property="principal.username" /></h3>
         <div id="form">
-            <form:form method="post" modelAttribute="userDetails">
+            <form:form method="post" modelAttribute="userDetailsDto">
                 <div id="details-box">
                     <div class="left">
                         <h1>Uzupełnij dane</h1>
@@ -39,16 +39,16 @@
                         <form:errors path="lastName" class="error"/>
                         <br/><form:input type="text" name="lastName" placeholder="Nazwisko" path="lastName"/>
 
-                        <form:errors path="address" style="color:red"/>
+                        <form:errors path="address" class="error"/>
                         <br/><form:input type="text" name="address" placeholder="Adres" path="address"/>
 
-                        <form:errors path="postCode" style="color:red"/>
+                        <form:errors path="postCode" class="error"/>
                         <br/><form:input type="text" name="postCode" placeholder="Kod pocztowy" path="postCode"/>
 
-                        <form:errors path="post" style="color:red"/>
+                        <form:errors path="post" class="error"/>
                         <br/><form:input type="text" name="post" placeholder="Poczta" path="post"/>
 
-
+                        <form:input type="hidden" name="id" path="id"/>
                         <input type="submit" value="Zapisz" />
                     </div>
                 </div>

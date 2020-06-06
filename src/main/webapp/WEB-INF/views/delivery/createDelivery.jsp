@@ -22,26 +22,26 @@
     </div>
     <div>
         <div id="newDeliveryForm">
-            <form:form method="post" modelAttribute="delivery">
+            <form:form method="post" modelAttribute="deliveryDto">
                 <c:if test="${successFlag}">
                     <span class="success">Zapisano dane</span>
                 </c:if>
 
                 <form:errors path="name" class="error"/>
-                <br/>Nazwa: <form:input type="text" name="name" path="name" /><br/>
+                <br/>Nazwa: <form:input type="text" path="name" /><br/>
 
-                <form:errors path="description" class="error"/>
-                <br/>Opis: <form:input type="text" name="description" path="description" /><br/>
+                <form:errors path="label" class="error"/>
+                <br/>Opis: <form:input type="text" path="label" /><br/>
 
                 <form:errors path="cost" class="error"/>
-                <br/>Cena: <form:input type="number" step="0.01" min="0" name="cost" path="cost" /><br/>
+                <br/>Cena: <form:input type="number" step="0.01" min="0" path="cost" /><br/>
 
                 <br/><input type="submit" value="Zapisz">
 
             </form:form>
         </div>
         <div id="deliveryList">
-            <h5>Dostępne pcje dostawy</h5>
+            <h5>Dostępne opcje dostawy</h5>
             <c:if test="${empty deliveryList}">
                 <p>Brak danych!</p>
             </c:if>
@@ -54,13 +54,13 @@
                         <th>...</th>
                         <th>...</th>
                     </tr>
-                    <c:forEach items="${deliveryList}" var="delivery">
+                    <c:forEach items="${deliveryList}" var="deliveryDto">
                         <tr>
-                            <td>${delivery.name}</td>
-                            <td>${delivery.description}</td>
-                            <td>${delivery.cost}</td>
-                            <td><a href="editDelivery?id=${delivery.id}">Edytuj</a></td>
-                            <td><a href="deleteDelivery?id=${delivery.id}">Usuń</a></td>
+                            <td>${deliveryDto.name}</td>
+                            <td>${deliveryDto.label}</td>
+                            <td>${deliveryDto.cost}</td>
+                            <td><a href="editDelivery?id=${deliveryDto.id}">Edytuj</a></td>
+                            <td><a href="deleteDelivery?id=${deliveryDto.id}">Usuń</a></td>
                         </tr>
                     </c:forEach>
                 </table>

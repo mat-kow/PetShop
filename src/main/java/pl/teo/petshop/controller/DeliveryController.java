@@ -7,65 +7,60 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.teo.petshop.entity.Delivery;
-import pl.teo.petshop.exception.ResourceNotFoundException;
-import pl.teo.petshop.repository.DeliveryRepository;
+import pl.teo.petshop.dto.DeliveryDto;
+import pl.teo.petshop.service.DeliveryService;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class DeliveryController {
-    private DeliveryRepository deliveryRepository;
+    private final DeliveryService deliveryService;
 
-    public DeliveryController(DeliveryRepository deliveryRepository) {
-        this.deliveryRepository = deliveryRepository;
+    public DeliveryController(DeliveryService deliveryService) {
+        this.deliveryService = deliveryService;
     }
 
     @ModelAttribute("deliveryList")
-    public List<Delivery> deliveryList() {
-        return deliveryRepository.findAll();
+    public List<DeliveryDto> deliveryList() {
+        return deliveryService.getAll();
     }
 
 
     @RequestMapping ("createDelivery")
-    public String createDeliveryForm(Model model){
-        model.addAttribute("delivery", new Delivery());
+    public String getNewDeliveryForm(Model model){
+        model.addAttribute("deliveryDto", new DeliveryDto());
         return "delivery/createDelivery";
     }
 
     @RequestMapping (value = "createDelivery", method = RequestMethod.POST)
-    public String createDelivery(@Valid Delivery delivery, BindingResult result, Model model){
+    public String createDelivery(@Valid DeliveryDto deliveryDto, BindingResult result){
         if(result.hasErrors()){
             return "delivery/createDelivery";
         }
-        deliveryRepository.save(delivery);
-        model.addAttribute("successFlag", true);
-        return "delivery/createDelivery";
+        deliveryService.save(deliveryDto);//todo success message
+        return "redirect:createDelivery";
     }
-
 
     @RequestMapping("deleteDelivery")
     public String deleteDelivery(@RequestParam(defaultValue = "0") long id){
-        deliveryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-        deliveryRepository.deleteById(id);
-        return "delivery/createDelivery";
+        deliveryService.delete(id);
+        return "redirect:createDelivery";
     }
-
 
     @RequestMapping(value = "editDelivery")
     public String editDeliveryForm(@RequestParam(defaultValue = "0") long id, Model model){
-        Delivery delivery = deliveryRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(id));
-        model.addAttribute(delivery);
+        DeliveryDto deliveryDto = deliveryService.findById(id);
+        model.addAttribute(deliveryDto);
         return "delivery/delivery";
     }
 
     @RequestMapping(value = "editDelivery", method = RequestMethod.POST)
-    public String editDelivery(@Valid Delivery delivery, BindingResult result, Model model){
+    public String editDelivery(@Valid DeliveryDto deliveryDto, BindingResult result, Model model){
         if(result.hasErrors()){
             return "delivery/delivery";
         }
-        deliveryRepository.save(delivery);
+        deliveryService.save(deliveryDto);
         model.addAttribute("successFlag", true);
         return "delivery/delivery";
     }

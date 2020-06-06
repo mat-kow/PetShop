@@ -8,20 +8,18 @@ import javax.validation.constraints.Size;
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Size(min = 3, max = 20, message = "Login musi mieć od 3do 20 znaków") @Column(length = 20, unique = true, nullable = false)
+    @Column(length = 20, unique = true, nullable = false)
     private String userName;
-    @Size(min = 3, message = "Hasło za krótkie") @Column(nullable = false)
+    @Column(nullable = false)
     private String password;
     private String roles;
     private boolean active;
-    @Email @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
     @OneToOne
     private UserDetails userDetails;
 
     public User() {
-        this.roles = "ROLE_USER";
-        this.active = true;
     }
     public User(String userName, String password, String roles, boolean active) {
         this.userName = userName;

@@ -41,8 +41,8 @@
                         <td>${user.userName}</td>
                         <td>${user.active}</td>
                         <td>${user.roles}</td>
-                        <td>${user.userDetails.firstName}</td>
-                        <td>${user.userDetails.lastName}</td>
+                        <td>${user.userDetailsDto.firstName}</td>
+                        <td>${user.userDetailsDto.lastName}</td>
                         <td>${user.email}</td>
                         <td><a href="admin?active=${!user.active}&id=${user.id}">Zablokuj/odblokuj</a></td>
                         <td>

@@ -22,7 +22,7 @@
     </div>
     <div>
         <h2>Dodaj nowy przedmiot</h2>
-        <form:form method="post" modelAttribute="product" enctype="multipart/form-data">
+        <form:form method="post" modelAttribute="productDto" enctype="multipart/form-data">
             <c:if test="${successFlag}">
                 <span class="success">Zapisano dane</span>
             </c:if>
