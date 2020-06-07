@@ -1,15 +1,20 @@
 package pl.teo.petshop.dto;
 
+import pl.teo.petshop.validation.MatchingPassword;
+import pl.teo.petshop.validation.UniqueEmail;
+import pl.teo.petshop.validation.UniqueUserName;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
-
+@MatchingPassword
 public class UserDto {
     private Long id;
-    @Size(min = 3, max = 20, message = "Login musi mieć od 3do 20 znaków")
+    @UniqueUserName @Size(min = 3, max = 20, message = "Login musi mieć od 3do 20 znaków")
     private String userName;
     @Size(min = 3, message = "Hasło za krótkie")
     private String password;
-    @Email
+    private String doubledPassword;
+    @Email @UniqueEmail
     private String email;
     private UserDetailsDto userDetailsDto;
     private String roles;
@@ -33,6 +38,14 @@ public class UserDto {
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getDoubledPassword() {
+        return doubledPassword;
+    }
+
+    public void setDoubledPassword(String doubledPassword) {
+        this.doubledPassword = doubledPassword;
     }
 
     public void setUserName(String userName) {

@@ -22,26 +22,21 @@
         <%@ include file="../fragments/header.jsp" %>
     </div>
     <div>
-        <form:form method="post" modelAttribute="user">
+        <form:form method="post" modelAttribute="userDto">
             <div id="register-box">
                 <div class="left">
                     <h1>Zarejestruj się</h1>
                     <form:errors path="userName" style="color:red"/>
-                    <c:if test="${userNameFlag == true}">
-                        <span class="error">Wprowadzona nazwa użytkownika jest zajęta</span>
-                    </c:if>
                     <br/><form:input type="text" name="username" placeholder="Nazwa użytkownika" path="userName" />
+
                     <form:errors path="email" style="color:red"/>
-                    <c:if test="${emailFlag == true}">
-                        <span class="error">Wprowadzony adres e-mail jest już używany.</span>
-                    </c:if>
                     <br/><form:input type="email" name="email" placeholder="E-mail" path="email"/>
+
                     <form:errors path="password" style="color:red"/>
                     <br/><form:input type="password" name="password" placeholder="Hasło" path="password"/>
-                    <c:if test="${password2Flag == true}">
-                        <span class="error">Hasła się nie zgadzają</span>
-                    </c:if>
-                    <br/><input type="password" name="password2" placeholder="Powtórz hasło" />
+
+                    <form:errors path="doubledPassword" style="color:red"/>
+                    <br/><form:input type="password" placeholder="Powtórz hasło" path="doubledPassword"/>
 
                     <input type="submit" value="Zarejestuj" />
                 </div>
