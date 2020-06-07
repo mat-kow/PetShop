@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 
 public class DeliveryDto {
     private Long id;
-    @Size(max = 20, min =3)
+    @Size(max = 20, min = 3, message = "{Size.deliveryDto.name}")
     private String name;
-    @Size(max = 20, min =3)
+    @Size(max = 20, min = 3, message = "{Size.deliveryDto.label}")
     private String label;
-    @Digits(integer = 4, fraction = 2)
+    @Digits(integer = 4, fraction = 2, message = "{Digits.deliveryDto.cost}")
     private BigDecimal cost;
 
     public String getName() {

@@ -142,6 +142,6 @@ HELP.md
 mvnw
 mvnw.cmd
 
-*.properties
+application.properties
 
 *.png

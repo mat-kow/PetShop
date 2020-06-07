@@ -18,7 +18,7 @@ public class MatchingPasswordValidator implements ConstraintValidator<MatchingPa
         boolean valid = userDto.getPassword().equals(userDto.getDoubledPassword());
         if (!valid) {
             constraintValidatorContext.disableDefaultConstraintViolation();
-            constraintValidatorContext.buildConstraintViolationWithTemplate("Passwords do not match!")
+            constraintValidatorContext.buildConstraintViolationWithTemplate("MatchingPassword.userDto.doubledPassword")
                     .addPropertyNode("doubledPassword").addConstraintViolation();
         }
         return valid;

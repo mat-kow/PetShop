@@ -22,7 +22,7 @@ public class AwsFileService implements FileService {
     private final String bucketName = "pierwszy-kubel";
     private final Regions clientRegion = Regions.EU_CENTRAL_1;
 
-    private FileMetadataRepository fileMetadataRepository;
+    private final FileMetadataRepository fileMetadataRepository;
 
     @Autowired
     public AwsFileService(FileMetadataRepository fileMetadataRepository) {
@@ -80,7 +80,7 @@ public class AwsFileService implements FileService {
 
              S3Object object = s3Client.getObject(new GetObjectRequest(bucketName, fileName));
              InputStream is = object.getObjectContent();
-             FileMetadata metadata = (fileMetadataRepository.findByName(fileName)).get();//todo orElseThrow
+             FileMetadata metadata = (fileMetadataRepository.findByName(fileName)).get();
              response.setContentType(metadata.getContentType());
              response.setContentLength((int) metadata.getSize());
              org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());

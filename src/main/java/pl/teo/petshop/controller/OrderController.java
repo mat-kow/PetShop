@@ -32,7 +32,7 @@ public class OrderController {
     }
 
     @ModelAttribute("deliveryOptions")
-    public List<DeliveryDto> deliveryOptions() {//todo dto?
+    public List<DeliveryDto> deliveryOptions() {
         return deliveryService.getAll();
     }
 

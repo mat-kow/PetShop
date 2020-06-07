@@ -6,15 +6,15 @@ import javax.validation.constraints.Size;
 
 public class UserDetailsDto {
     private Long id;
-    @Size(max = 20) @NotBlank
+    @Size(max = 20, message = "{Size.userDetailsDto.firstName}") @NotBlank(message = "{NotBlank.userDetailsDto}")
     private String firstName;
-    @Size(max = 20) @NotBlank
+    @Size(max = 20, message = "{Size.userDetailsDto.lastName}") @NotBlank(message = "{NotBlank.userDetailsDto}")
     private String lastName;
-    @Size(max = 100) @NotBlank
+    @Size(max = 100, message = "{Size.userDetailsDto.address}") @NotBlank(message = "{NotBlank.userDetailsDto}")
     private String address;
-    @Pattern(regexp = "[0-9]{2}-[0-9]{3}")
+    @Pattern(regexp = "[0-9]{2}-[0-9]{3}", message = "{Pattern.userDetailsDto.postCode}")
     private String postCode;
-    @Size(max = 20) @NotBlank
+    @Size(max = 20, message = "{Size.userDetailsDto.post}") @NotBlank(message = "{NotBlank.userDetailsDto}")
     private String post;
 
     public String getFirstName() {

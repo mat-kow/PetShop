@@ -5,7 +5,7 @@ import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 
 @Entity
-public class Product {//todo messages
+public class Product {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(length = 50)

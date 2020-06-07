@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class UserDetails {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)//todo messages
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 20)
     private String firstName;

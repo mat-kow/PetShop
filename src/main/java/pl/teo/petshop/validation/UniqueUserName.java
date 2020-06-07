@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueUserName {
-    String message() default "Duplicated username";
+    String message() default "";
 
     Class<?>[] groups() default {};
 

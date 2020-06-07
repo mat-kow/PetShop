@@ -10,20 +10,20 @@ import java.math.BigDecimal;
 
 public class ProductDto {
     private Long id;
-    @Size(max = 50) @NotBlank
+    @Size(max = 50, message = "{Size.productDto.name}") @NotBlank(message = "{NotBlank.productDto}")
     private String name;
-    @Size(max = 50)
+    @Size(max = 50, message = "{Size.productDto.manufacturer}")
     private String manufacturer;
-    @Size(max = 50)
+    @Size(max = 50, message = "{Size.productDto.supplier}")
     private String supplier;
-    @EAN
+    @EAN(message = "{EAN.productDto.ean}")
     private String ean;
-    @Digits(integer = 4, fraction = 2)
+    @Digits(integer = 4, fraction = 2, message = "{Digits.productDto.price}")
     private BigDecimal price;
     private int weightGrams;
     private int stock;
     private String categories;
-    @Size(max = 1000)
+    @Size(max = 1000, message = "{Size.productDto.description}")
     private String description;
     private boolean active;
     private FileMetadata imageMeta;
