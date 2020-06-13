@@ -44,4 +44,20 @@ public class DeliveryDto {
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
+
+    public boolean equals(DeliveryDto dto) {
+        try {
+            if (this.id == null && dto.getId() == null){
+                return this.name.equals(dto.getName())
+                        && this.cost.equals(dto.getCost())
+                        && this.label.equals(dto.getLabel());
+             }
+            return this.name.equals(dto.getName())
+                    && this.id.equals(dto.getId())
+                    && this.cost.equals(dto.getCost())
+                    && this.label.equals(dto.getLabel());
+        }catch (NullPointerException e){
+            return false;
+        }
+    }
 }

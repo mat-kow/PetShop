@@ -2,6 +2,7 @@ package pl.teo.petshop.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.teo.petshop.OrderStatus;
 import pl.teo.petshop.dto.OrderDto;
 import pl.teo.petshop.dto.OrderProductDto;
@@ -38,6 +39,7 @@ public class DefaultOrderService implements OrderService {
         this.deliveryService = deliveryService;
     }
 
+    @Transactional
     @Override
     public long save(OrderDto orderDto) {
         Order order = mapDtoToOrder(orderDto);
@@ -56,6 +58,7 @@ public class DefaultOrderService implements OrderService {
         return mapOrderToDto(orderRepository.findById(id).orElseThrow(ResourceNotFoundException::new));
     }
 
+    @Transactional
     @Override
     public void changeStatusToNext(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(()-> new ResourceNotFoundException(orderId));

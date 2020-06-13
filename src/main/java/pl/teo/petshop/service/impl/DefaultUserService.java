@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class DefaultUserService implements UserService {
     private final UserRepository userRepository;
     private final UserDetailsRepository userDetailsRepository;
@@ -30,6 +29,7 @@ public class DefaultUserService implements UserService {
         this.userDetailsRepository = userDetailsRepository;
     }
 
+    @Transactional
     @Override
     public void createNewUser(UserDto userDto) {
         User user = mapDtoToUser(userDto);
@@ -39,6 +39,7 @@ public class DefaultUserService implements UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void changeActive(boolean active, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
@@ -51,6 +52,7 @@ public class DefaultUserService implements UserService {
         return userRepository.findAll().stream().map(this::mapUserToDto).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public void setRole(Long id, String role) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
@@ -64,11 +66,13 @@ public class DefaultUserService implements UserService {
         return mapUserToDto(user);
     }
 
+    @Transactional
     @Override
     public void save(UserDto dto) {
         userRepository.save(mapDtoToUser(dto));
     }
 
+    @Transactional
     @Override
     public void createDetails(UserDetailsDto userDetailsDto) {
         UserDetails userDetails = mapDtoToUserDetails(userDetailsDto);
@@ -83,6 +87,7 @@ public class DefaultUserService implements UserService {
         return userDto.getUserDetailsDto();
     }
 
+    @Transactional
     @Override
     public void setDetailsForCurrentUser(UserDetailsDto userDetailsDto) {
         UserDetails userDetails = mapDtoToUserDetails(userDetailsDto);

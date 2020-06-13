@@ -12,7 +12,6 @@ import pl.teo.petshop.service.DeliveryService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Transactional
 @Service
 public class DefaultDeliveryService implements DeliveryService {
     private final DeliveryRepository deliveryRepository;
@@ -22,6 +21,7 @@ public class DefaultDeliveryService implements DeliveryService {
         this.deliveryRepository = deliveryRepository;
     }
 
+    @Transactional
     @Override
     public void save(DeliveryDto deliveryDto) {
         deliveryRepository.save(mapDtoToDelivery(deliveryDto));
@@ -34,8 +34,12 @@ public class DefaultDeliveryService implements DeliveryService {
 
     @Override
     public void delete(Long id) {
-        deliveryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-        deliveryRepository.deleteById(id);
+        if (deliveryRepository.existsById(id)){
+            deliveryRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException(id);
+        }
+
     }
 
     @Override

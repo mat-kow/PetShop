@@ -2,6 +2,7 @@ package pl.teo.petshop.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import pl.teo.petshop.dto.ProductDto;
 import pl.teo.petshop.entity.Product;
@@ -29,6 +30,7 @@ public class DefaultProductService implements ProductService {
         return productRepository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public void create(ProductDto productDto, MultipartFile image) {
         Product product = mapDtoToProduct(productDto);
