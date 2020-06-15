@@ -1,19 +1,23 @@
 package pl.teo.petshop.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
-@Entity
+@Entity @Getter @Setter @NoArgsConstructor
 public class FileMetadata {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private String originalName;
-    private long size;
+    private Long size;
     private String contentType;
 
 
@@ -24,46 +28,20 @@ public class FileMetadata {
         this.contentType = multipartFile.getContentType();
     }
 
-    public FileMetadata() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FileMetadata that = (FileMetadata) o;
+        return Objects.equals(id, that.id) &&
+                name.equals(that.name) &&
+                originalName.equals(that.originalName) &&
+                size.equals(that.size) &&
+                contentType.equals(that.contentType);
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getOriginalName() {
-        return originalName;
-    }
-
-    public void setOriginalName(String originalName) {
-        this.originalName = originalName;
-    }
-
-    public long getSize() {
-        return size;
-    }
-
-    public void setSize(long size) {
-        this.size = size;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, originalName, size, contentType);
     }
 }

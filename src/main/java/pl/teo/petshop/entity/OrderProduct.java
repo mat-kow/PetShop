@@ -1,50 +1,37 @@
 package pl.teo.petshop.entity;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity @Getter @Setter @NoArgsConstructor
 public class OrderProduct {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     private Product product;
-    private int quantity;
+    private Integer quantity;
 
-    @Transient
-    public BigDecimal getSum(){
-        return this.product.getPrice().multiply(BigDecimal.valueOf(this.quantity)) ;
-    }
-
-    public OrderProduct(Product product, int quantity) {
+    public OrderProduct(Product product,Integer quantity) {
         this.product = product;
         this.quantity = quantity;
     }
 
-    public OrderProduct() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderProduct that = (OrderProduct) o;
+        return Objects.equals(id, that.id) &&
+                product.equals(that.product) &&
+                quantity.equals(that.quantity);
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, product, quantity);
     }
 }

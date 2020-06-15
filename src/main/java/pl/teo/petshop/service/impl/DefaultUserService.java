@@ -130,7 +130,7 @@ public class DefaultUserService implements UserService {
         dto.setPassword(user.getPassword());
         dto.setUserName(user.getUserName());
         dto.setRoles(user.getRoles());
-        dto.setActive(user.isActive());
+        dto.setActive(user.getActive());
         if(user.getUserDetails() != null){
             dto.setUserDetailsDto(mapUserDetailsToDto(user.getUserDetails()));
         }

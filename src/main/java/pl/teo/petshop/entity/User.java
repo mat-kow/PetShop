@@ -1,19 +1,21 @@
 package pl.teo.petshop.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity @Getter @Setter
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(length = 20, unique = true, nullable = false)
     private String userName;
     @Column(nullable = false)
     private String password;
     private String roles;
-    private boolean active;
+    private Boolean active;
     @Column(nullable = false, unique = true, length = 50)
     private String email;
     @OneToOne
@@ -21,6 +23,13 @@ public class User {
 
     public User() {
     }
+
+    public User(String userName, String password, String email) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+    }
+
     public User(String userName, String password, String roles, boolean active) {
         this.userName = userName;
         this.password = password;
@@ -35,62 +44,22 @@ public class User {
         this.email = email;
     }
 
-    public String getEmail() {
-        return email;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                userName.equals(user.userName) &&
+                password.equals(user.password) &&
+                Objects.equals(roles, user.roles) &&
+                Objects.equals(active, user.active) &&
+                email.equals(user.email) &&
+                Objects.equals(userDetails, user.userDetails);
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public UserDetails getUserDetails() {
-        return userDetails;
-    }
-
-    public void setUserDetails(UserDetails userDetails) {
-        this.userDetails = userDetails;
-    }
-
-
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, password, roles, active, email, userDetails);
     }
 }

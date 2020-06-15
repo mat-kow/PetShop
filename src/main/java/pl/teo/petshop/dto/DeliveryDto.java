@@ -1,9 +1,15 @@
 package pl.teo.petshop.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Objects;
 
+@Getter @Setter @NoArgsConstructor
 public class DeliveryDto {
     private Long id;
     @Size(max = 20, min = 3, message = "{Size.deliveryDto.name}")
@@ -13,51 +19,25 @@ public class DeliveryDto {
     @Digits(integer = 4, fraction = 2, message = "{Digits.deliveryDto.cost}")
     private BigDecimal cost;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public DeliveryDto(String name, String label, BigDecimal cost) {
         this.name = name;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
         this.label = label;
-    }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
-    public boolean equals(DeliveryDto dto) {
-        try {
-            if (this.id == null && dto.getId() == null){
-                return this.name.equals(dto.getName())
-                        && this.cost.equals(dto.getCost())
-                        && this.label.equals(dto.getLabel());
-             }
-            return this.name.equals(dto.getName())
-                    && this.id.equals(dto.getId())
-                    && this.cost.equals(dto.getCost())
-                    && this.label.equals(dto.getLabel());
-        }catch (NullPointerException e){
-            return false;
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DeliveryDto that = (DeliveryDto) o;
+        return Objects.equals(id, that.id) &&
+                name.equals(that.name) &&
+                label.equals(that.label) &&
+                cost.equals(that.cost);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, label, cost);
     }
 }

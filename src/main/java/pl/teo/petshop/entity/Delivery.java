@@ -1,12 +1,15 @@
 package pl.teo.petshop.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
+import java.util.Objects;
 
-@Entity @Data
+@Entity @Getter @Setter @NoArgsConstructor
 public class Delivery {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,19 +21,25 @@ public class Delivery {
     @Digits (integer = 4, fraction = 2)
     private BigDecimal cost;
 
-    public boolean equals(Delivery delivery) {
-        try {
-            if (this.id == null && delivery.getId() == null) {
-                return this.name.equals(delivery.getName())
-                        && this.cost.equals(delivery.getCost())
-                        && this.label.equals(delivery.getLabel());
-            }
-            return this.name.equals(delivery.getName())
-                    && this.id.equals(delivery.getId())
-                    && this.cost.equals(delivery.getCost())
-                    && this.label.equals(delivery.getLabel());
-        }catch (NullPointerException e){
-            return false;
-        }
+    public Delivery(String name, String label, BigDecimal cost) {
+        this.name = name;
+        this.label = label;
+        this.cost = cost;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Delivery delivery = (Delivery) o;
+        return Objects.equals(id, delivery.id) &&
+                name.equals(delivery.name) &&
+                label.equals(delivery.label) &&
+                cost.equals(delivery.cost);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, label, cost);
     }
 }

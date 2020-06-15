@@ -1,42 +1,22 @@
 package pl.teo.petshop.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import pl.teo.petshop.OrderStatus;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
+@Getter @Setter
 public class OrderDto {
     private UserDto userDto;
     private List<OrderProductDto> productsDto;
     private DeliveryDto deliveryDto;
-    private long id;
+    private Long id;
     private Timestamp created;
     private OrderStatus status;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
 
     public OrderDto(UserDto userDto, List<OrderProductDto> productsDto) {
         this.userDto = userDto;
@@ -54,27 +34,21 @@ public class OrderDto {
         return sum;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDto orderDto = (OrderDto) o;
+        return Objects.equals(userDto, orderDto.userDto) &&
+                Objects.equals(productsDto, orderDto.productsDto) &&
+                Objects.equals(deliveryDto, orderDto.deliveryDto) &&
+                Objects.equals(id, orderDto.id) &&
+                Objects.equals(created, orderDto.created) &&
+                status == orderDto.status;
     }
 
-    public void setUserDto(UserDto userDto) {
-        this.userDto = userDto;
-    }
-
-    public List<OrderProductDto> getProductsDto() {
-        return productsDto;
-    }
-
-    public void setProductsDto(List<OrderProductDto> productsDto) {
-        this.productsDto = productsDto;
-    }
-
-    public DeliveryDto getDeliveryDto() {
-        return deliveryDto;
-    }
-
-    public void setDeliveryDto(DeliveryDto deliveryDto) {
-        this.deliveryDto = deliveryDto;
+    @Override
+    public int hashCode() {
+        return Objects.hash(userDto, productsDto, deliveryDto, id, created, status);
     }
 }

@@ -1,8 +1,12 @@
 package pl.teo.petshop.entity;
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity @Getter @Setter
 public class UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,52 +24,21 @@ public class UserDetails {
     public UserDetails() {
     }
 
-    public String getAddress() {
-        return address;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDetails that = (UserDetails) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(postCode, that.postCode) &&
+                Objects.equals(post, that.post);
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, address, postCode, post);
     }
-
-    public String getPost() {
-        return post;
-    }
-
-    public void setPost(String post) {
-        this.post = post;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
 }

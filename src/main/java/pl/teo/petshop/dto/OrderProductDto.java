@@ -1,7 +1,13 @@
 package pl.teo.petshop.dto;
 
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
+@Getter
+@Setter
 public class OrderProductDto {
     private Long Id;
     private ProductDto productDto;
@@ -18,27 +24,18 @@ public class OrderProductDto {
     public OrderProductDto() {
     }
 
-    public ProductDto getProductDto() {
-        return productDto;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderProductDto that = (OrderProductDto) o;
+        return quantity == that.quantity &&
+                Objects.equals(Id, that.Id) &&
+                productDto.equals(that.productDto);
     }
 
-    public void setProductDto(ProductDto productDto) {
-        this.productDto = productDto;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, productDto, quantity);
     }
 }

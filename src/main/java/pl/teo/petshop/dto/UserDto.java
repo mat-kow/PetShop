@@ -1,5 +1,9 @@
 package pl.teo.petshop.dto;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.teo.petshop.validation.MatchingPassword;
 import pl.teo.petshop.validation.UniqueEmail;
 import pl.teo.petshop.validation.UniqueUserName;
@@ -7,7 +11,9 @@ import pl.teo.petshop.validation.UniqueUserName;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-@MatchingPassword
+import java.util.Objects;
+
+@MatchingPassword @Getter @Setter @NoArgsConstructor
 public class UserDto {
     private Long id;
     @UniqueUserName @Size(min = 3, max = 20, message = "{Size.UserDto.userName}")
@@ -21,67 +27,37 @@ public class UserDto {
     private String roles;
     private Boolean active;
 
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
+    public UserDto(String userName, String password, String email, Boolean active, String roles) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
         this.roles = roles;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
         this.active = active;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getDoubledPassword() {
-        return doubledPassword;
-    }
-
-    public void setDoubledPassword(String doubledPassword) {
-        this.doubledPassword = doubledPassword;
-    }
-
-    public void setUserName(String userName) {
+    public UserDto(String userName, String password,String email) {
         this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public UserDetailsDto getUserDetailsDto() {
-        return userDetailsDto;
-    }
-
-    public void setUserDetailsDto(UserDetailsDto userDetailsDto) {
-        this.userDetailsDto = userDetailsDto;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(id, userDto.id) &&
+                userName.equals(userDto.userName) &&
+                password.equals(userDto.password) &&
+                Objects.equals(doubledPassword, userDto.doubledPassword) &&
+                email.equals(userDto.email) &&
+                Objects.equals(userDetailsDto, userDto.userDetailsDto) &&
+                roles.equals(userDto.roles) &&
+                active.equals(userDto.active);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, password, doubledPassword, email, userDetailsDto, roles, active);
     }
 }

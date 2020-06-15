@@ -38,16 +38,16 @@ class DefaultDeliveryServiceTest {
     void should_map_delivery_to_dto() {
         DeliveryDto dto = getDto();
         Delivery entity = getDelivery();
-        assertTrue(dto.equals(deliveryService.mapToDto(entity)));
+        assertEquals(dto, deliveryService.mapToDto(entity));
         dto.setName("shop");
-        assertFalse(dto.equals(deliveryService.mapToDto(entity)));
+        assertNotEquals(dto, deliveryService.mapToDto(entity));
     }
 
     @Test
     void should_map_dto_to_delivery() {
         DeliveryDto dto = getDto();
         Delivery entity = getDelivery();
-        assertTrue(entity.equals(deliveryService.mapDtoToDelivery(dto)));
+        assertEquals(entity, deliveryService.mapDtoToDelivery(dto));
     }
 
     private List<Delivery> mockGetAll() {

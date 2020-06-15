@@ -44,11 +44,7 @@ public class DefaultOrderService implements OrderService {
     public long save(OrderDto orderDto) {
         Order order = mapDtoToOrder(orderDto);
         order.setStatus(OrderStatus.CREATED);
-        Product product1 = order.getProducts().get(0).getProduct();
-        System.out.println(product1.getId() + ": " + product1.getName());
-        for (OrderProduct product : order.getProducts()){
-            orderProductRepository.save(product);
-        }
+        order.getProducts().forEach(orderProductRepository::save);
         orderRepository.save(order);
         return order.getId();
     }

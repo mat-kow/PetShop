@@ -84,7 +84,7 @@ public class AwsFileService implements FileService {
              InputStream is = object.getObjectContent();
              FileMetadata metadata = (fileMetadataRepository.findByName(fileName)).get();
              response.setContentType(metadata.getContentType());
-             response.setContentLength((int) metadata.getSize());
+             response.setContentLength(metadata.getSize().intValue());
              org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
              response.flushBuffer();
          } catch (IOException ex) {

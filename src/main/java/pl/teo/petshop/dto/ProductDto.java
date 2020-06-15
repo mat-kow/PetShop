@@ -1,5 +1,8 @@
 package pl.teo.petshop.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.EAN;
 import pl.teo.petshop.entity.FileMetadata;
 
@@ -7,7 +10,9 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Objects;
 
+@Getter @Setter @NoArgsConstructor
 public class ProductDto {
     private Long id;
     @Size(max = 50, message = "{Size.productDto.name}") @NotBlank(message = "{NotBlank.productDto}")
@@ -20,107 +25,39 @@ public class ProductDto {
     private String ean;
     @Digits(integer = 4, fraction = 2, message = "{Digits.productDto.price}")
     private BigDecimal price;
-    private int weightGrams;
-    private int stock;
+    private Integer weightGrams;
+    private Integer stock;
     private String categories;
     @Size(max = 1000, message = "{Size.productDto.description}")
     private String description;
-    private boolean active;
+    private Boolean active;
     private FileMetadata imageMeta;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public ProductDto(@Size(max = 50, message = "{Size.productDto.name}") @NotBlank(message = "{NotBlank.productDto}") String name) {
         this.name = name;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDto that = (ProductDto) o;
+        return Objects.equals(id, that.id) &&
+                name.equals(that.name) &&
+                Objects.equals(manufacturer, that.manufacturer) &&
+                Objects.equals(supplier, that.supplier) &&
+                Objects.equals(ean, that.ean) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(weightGrams, that.weightGrams) &&
+                Objects.equals(stock, that.stock) &&
+                Objects.equals(categories, that.categories) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(active, that.active) &&
+                Objects.equals(imageMeta, that.imageMeta);
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
-    }
-
-    public String getEan() {
-        return ean;
-    }
-
-    public void setEan(String ean) {
-        this.ean = ean;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getWeightGrams() {
-        return weightGrams;
-    }
-
-    public void setWeightGrams(int weightGrams) {
-        this.weightGrams = weightGrams;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public String getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String categories) {
-        this.categories = categories;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public FileMetadata getImageMeta() {
-        return imageMeta;
-    }
-
-    public void setImageMeta(FileMetadata imageMeta) {
-        this.imageMeta = imageMeta;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, manufacturer, supplier, ean, price, weightGrams, stock, categories, description, active, imageMeta);
     }
 }

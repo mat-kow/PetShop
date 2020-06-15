@@ -1,9 +1,15 @@
 package pl.teo.petshop.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
+@Getter
+@Setter
 public class UserDetailsDto {
     private Long id;
     @Size(max = 20, message = "{Size.userDetailsDto.firstName}") @NotBlank(message = "{NotBlank.userDetailsDto}")
@@ -17,51 +23,21 @@ public class UserDetailsDto {
     @Size(max = 20, message = "{Size.userDetailsDto.post}") @NotBlank(message = "{NotBlank.userDetailsDto}")
     private String post;
 
-    public String getFirstName() {
-        return firstName;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDetailsDto that = (UserDetailsDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(postCode, that.postCode) &&
+                Objects.equals(post, that.post);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
-    public String getPost() {
-        return post;
-    }
-
-    public void setPost(String post) {
-        this.post = post;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, address, postCode, post);
     }
 }

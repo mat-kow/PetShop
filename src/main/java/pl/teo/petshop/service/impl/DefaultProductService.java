@@ -53,7 +53,7 @@ public class DefaultProductService implements ProductService {
             product.setId(dto.getId());
         }
         product.setImageMeta(dto.getImageMeta());
-        product.setActive(dto.isActive());
+        product.setActive(dto.getActive());
         product.setCategories(dto.getCategories());
         product.setDescription(dto.getDescription());
         product.setEan(dto.getEan());
@@ -71,7 +71,7 @@ public class DefaultProductService implements ProductService {
     public ProductDto mapToDto (Product product){
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
-        productDto.setActive(product.isActive());
+        productDto.setActive(product.getActive());
         productDto.setCategories(product.getCategories());
         productDto.setDescription(product.getDescription());
         productDto.setEan(product.getEan());

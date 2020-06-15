@@ -1,13 +1,17 @@
 package pl.teo.petshop.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
+import java.util.Objects;
 
-@Entity
+@Entity @Getter @Setter
 public class Product {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(length = 50)
     private String name;
     @Column(length = 50)
@@ -18,108 +22,36 @@ public class Product {
     private String ean;
     @Digits (integer = 4, fraction = 2)
     private BigDecimal price;
-    private int weightGrams;
-    private int stock;
+    private Integer weightGrams;
+    private Integer stock;
     private String categories;
     @Column(length = 1000)
     private String description;
-    private boolean active;
+    private Boolean active;
     @OneToOne
     private FileMetadata imageMeta;
 
-    public long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+                name.equals(product.name) &&
+                Objects.equals(manufacturer, product.manufacturer) &&
+                Objects.equals(supplier, product.supplier) &&
+                Objects.equals(ean, product.ean) &&
+                Objects.equals(price, product.price) &&
+                Objects.equals(weightGrams, product.weightGrams) &&
+                Objects.equals(stock, product.stock) &&
+                Objects.equals(categories, product.categories) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(active, product.active) &&
+                Objects.equals(imageMeta, product.imageMeta);
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
-    }
-
-    public FileMetadata getImageMeta() {
-        return imageMeta;
-    }
-
-    public void setImageMeta(FileMetadata image) {
-        this.imageMeta = image;
-    }
-
-    public String getEan() {
-        return ean;
-    }
-
-    public void setEan(String ean) {
-        this.ean = ean;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getWeightGrams() {
-        return weightGrams;
-    }
-
-    public void setWeightGrams(int weightGrams) {
-        this.weightGrams = weightGrams;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public String getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String categories) {
-        this.categories = categories;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, manufacturer, supplier, ean, price, weightGrams, stock, categories, description, active, imageMeta);
     }
 }

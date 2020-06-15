@@ -1,17 +1,20 @@
 package pl.teo.petshop.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import pl.teo.petshop.OrderStatus;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
-@Entity @Table(name = "orders")
+@Entity @Getter @Setter
+@Table(name = "orders")
 public class Order {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     private User user;
     @OneToMany
@@ -22,61 +25,21 @@ public class Order {
     @ManyToOne
     private Delivery delivery;
 
-    @Transient
-    public BigDecimal getSum(){
-        BigDecimal sum = new BigDecimal(0);
-        for(OrderProduct orderProduct : this.products){
-            sum = sum.add(orderProduct.getSum());
-        }
-        sum = sum.add(this.delivery.getCost());
-        return sum;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) &&
+                user.equals(order.user) &&
+                products.equals(order.products) &&
+                Objects.equals(created, order.created) &&
+                status == order.status &&
+                delivery.equals(order.delivery);
     }
 
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public Delivery getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
-    }
-
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<OrderProduct> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<OrderProduct> products) {
-        this.products = products;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, products, created, status, delivery);
     }
 }
