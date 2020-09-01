@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.teo.petshop.dto.UserDto;
 import pl.teo.petshop.service.UserService;
 
@@ -33,12 +35,22 @@ public class RegisterController {
             return "register";
         }
         userService.createNewUser(userDto);
-        return "redirect:home";
+        return "afterRegister";
     }
 
     @RequestMapping("/login")
     public String getLoginPage(){
         return "login";
+    }
+
+    @RequestMapping("/verify")
+    public String verify(@RequestParam String uuid, @RequestParam Long id) {
+        if (uuid != null && id != null) {
+            if (userService.verify(id, uuid)) {
+                return "successValidation";
+            }
+        }
+        return "redirect:../../home";
     }
 
 }

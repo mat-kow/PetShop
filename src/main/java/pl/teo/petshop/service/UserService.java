@@ -25,4 +25,5 @@ public interface UserService {
     User mapDtoToUser (UserDto dto);
     UserDetailsDto mapUserDetailsToDto(UserDetails userDetails);
     UserDetails mapDtoToUserDetails(UserDetailsDto dto);
+    boolean verify(long id, String uuid);
     }

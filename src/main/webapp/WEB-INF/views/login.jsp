@@ -25,7 +25,7 @@
                 <div class="left">
                     <h1>Zaloguj się</h1>
                     <c:if test="${param.error==true}">
-                        <span class="error">Błędny login lub hasło</span>
+                        <span class="error">Błędny login albo hasło lub konto jest nie aktywne</span>
                     </c:if>
                     <br/><input type="text" name="username" placeholder="Nazwa użytkownika" autofocus/>
                     <br/><input type="password" name="password" placeholder="Hasło"/>

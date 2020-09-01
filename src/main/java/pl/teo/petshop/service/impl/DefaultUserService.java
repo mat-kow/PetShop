@@ -11,9 +11,11 @@ import pl.teo.petshop.entity.UserDetails;
 import pl.teo.petshop.exception.UserNotFoundException;
 import pl.teo.petshop.repository.UserDetailsRepository;
 import pl.teo.petshop.repository.UserRepository;
+import pl.teo.petshop.service.MessageService;
 import pl.teo.petshop.service.UserService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,22 +23,40 @@ public class DefaultUserService implements UserService {
     private final UserRepository userRepository;
     private final UserDetailsRepository userDetailsRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MessageService messageService;
+
 
     @Autowired
-    public DefaultUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,UserDetailsRepository userDetailsRepository) {
+    public DefaultUserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                              UserDetailsRepository userDetailsRepository, MessageService messageService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsRepository = userDetailsRepository;
+        this.messageService = messageService;
+    }
+
+    @Override
+    public boolean verify(long id, String uuid) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        if (uuid.equals(user.getUuid())) {
+            user.setActive(true);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 
     @Transactional
     @Override
     public void createNewUser(UserDto userDto) {
         User user = mapDtoToUser(userDto);
-        user.setActive(true);
+        user.setActive(false);
         user.setRoles("ROLE_USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        user.setUuid(uuid);
         userRepository.save(user);
+        messageService.sendVerification(user);
     }
 
     @Transactional

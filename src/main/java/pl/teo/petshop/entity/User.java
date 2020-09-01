@@ -20,6 +20,7 @@ public class User {
     private String email;
     @OneToOne
     private UserDetails userDetails;
+    private String uuid;
 
     public User() {
     }
@@ -49,17 +50,18 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
+        return id.equals(user.id) &&
                 userName.equals(user.userName) &&
                 password.equals(user.password) &&
-                Objects.equals(roles, user.roles) &&
-                Objects.equals(active, user.active) &&
+                roles.equals(user.roles) &&
+                active.equals(user.active) &&
                 email.equals(user.email) &&
-                Objects.equals(userDetails, user.userDetails);
+                Objects.equals(userDetails, user.userDetails) &&
+                uuid.equals(user.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, password, roles, active, email, userDetails);
+        return Objects.hash(id, userName, password, roles, active, email, userDetails, uuid);
     }
 }
